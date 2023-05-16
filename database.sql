@@ -6,11 +6,10 @@
 
 --database lawn_shop
 
-
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR UNIQUE NOT NULL,
-  password VARCHAR NOT NULL,
+  username VARCHAR(80) UNIQUE NOT NULL,
+  password VARCHAR(1000) NOT NULL
 );
 
 CREATE TABLE sales (
@@ -23,16 +22,16 @@ CREATE TABLE sales (
 CREATE TABLE address (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  city VARCHAR NOT NULL,
-  state VARCHAR NOT NULL,
-  street VARCHAR null,
+  city VARCHAR(50) NOT NULL,
+  state VARCHAR(50) NOT NULL,
+  street VARCHAR(300) null,
   zip INTEGER null
 );
 
 CREATE TABLE featured_items (
   id SERIAL PRIMARY KEY,
   sales_id INTEGER REFERENCES sales(id),
-  item VARCHAR NOT NULL,
+  item VARCHAR(80) NOT NULL,
   price DECIMAL null,
-  desc VARCHAR null
+  description VARCHAR(1000) null
 );

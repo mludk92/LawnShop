@@ -15,11 +15,11 @@ function Nav() {
           <span>A</span>
           <span>W</span>
           <span>N</span>
-          <span> </span>
+          <span>  -  </span>
           <span>S</span>
-          <span>A</span>
-          <span>L</span>
-          <span>E</span></h2>
+          <span>H</span>
+          <span>O</span>
+          <span>P</span></h2>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}

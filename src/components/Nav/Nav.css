@@ -3,9 +3,8 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 0 30px;
-  background: linear-gradient(to bottom,
-   #679e3a 0%, #8ec059 50%, #8ec35e 70%,
-    #d0e8af 100%);
+  background: rgb(9,249,9);
+background: linear-gradient(13deg, rgba(9,249,9,1) 0%, rgba(125,204,144,1) 2%, rgba(111,176,65,1) 5%, rgba(127,179,128,1) 17%, rgba(151,207,140,1) 33%, rgba(113,195,89,1) 42%, rgba(136,187,110,1) 63%, rgba(90,158,36,1) 72%, rgba(69,116,21,1) 85%, rgba(81,130,25,1) 94%, rgba(4,113,19,1) 97%, rgba(133,235,10,1) 100%);
   overflow: hidden;
   padding: 10px;
   border-radius: 5px;
@@ -63,7 +62,7 @@
   position: relative;
   animation: ripple 2.5s 2;
   text-decoration: solid;
-  text-shadow: 0 0 2px #141d11, 0 0 4px #0c1608, 0 0 6px #286b12, 0 0 8px #286b12, 0 0 10px #286b12, 0 0 12px #286b12, 0 0 14px #286b12, 0 0 16px #286b12;
+  text-shadow: 0 0 3px #020500, 0 0 4px #0c1608, 0 0 6px #286b12, 0 0 8px #286b12, 0 0 10px #286b12, 0 0 12px #286b12, 0 0 14px #0d2605, 0 0 16px #47d01a;
 }
 
 

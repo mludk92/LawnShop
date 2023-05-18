@@ -3,15 +3,19 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 0 30px;
-  background: rgb(9,249,9);
-background: linear-gradient(13deg, rgba(9,249,9,1) 0%, rgba(125,204,144,1) 2%, rgba(111,176,65,1) 5%, rgba(127,179,128,1) 17%, rgba(151,207,140,1) 33%, rgba(113,195,89,1) 42%, rgba(136,187,110,1) 63%, rgba(90,158,36,1) 72%, rgba(69,116,21,1) 85%, rgba(81,130,25,1) 94%, rgba(4,113,19,1) 97%, rgba(133,235,10,1) 100%);
+  background: rgb(9, 249, 9);
+  background: linear-gradient(13deg, 
+  rgba(9, 249, 9, 1) 0%, rgba(125, 204, 144, 1) 2%,
+  rgba(111, 176, 65, 1) 5%, rgba(127, 179, 128, 1) 17%,
+  rgba(151, 207, 140, 1) 33%, rgba(113, 195, 89, 1) 42%,
+  rgba(136, 187, 110, 1) 63%, rgba(90, 158, 36, 1) 72%,
+  rgba(69, 116, 21, 1) 85%, rgba(81, 130, 25, 1) 94%,
+  rgba(4, 113, 19, 1) 97%, rgba(133, 235, 10, 1) 100%);
   overflow: hidden;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0px 0px 50px rgb(2, 54, 6);
+  box-shadow: inset 0px 0px 50px rgb(2, 54, 6);
 }
-
-
 
 
 
@@ -120,3 +124,4 @@ background: linear-gradient(13deg, rgba(9,249,9,1) 0%, rgba(125,204,144,1) 2%, r
 .logo span:nth-child(9) {
   animation-delay: 2.4s;
 }
+

@@ -6,7 +6,10 @@ body,
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0px;
+  margin: 7px;
+  background-color: rgb(177, 181, 175);
+  margin-top: 10px;
+
 }
 
 img {

@@ -15,12 +15,13 @@ function Nav() {
           <span>A</span>
           <span>W</span>
           <span>N</span>
-          <span>  -  </span>
+          <span> - </span>
           <span>S</span>
           <span>H</span>
           <span>O</span>
           <span>P</span></h2>
       </Link>
+     
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
@@ -38,7 +39,7 @@ function Nav() {
             </Link>
 
             <Link className="navLink" to="/info">
-              Info Page
+              Add Sale
             </Link>
 
             <LogOutButton className="navLink" />

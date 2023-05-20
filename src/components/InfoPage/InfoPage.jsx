@@ -16,7 +16,7 @@ function InfoPage() {
 
   const [startdate, setStart] = useState(null);
   const [enddate, setEnd] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState('');  
 
   const addSale = (event) => {
     event.preventDefault();

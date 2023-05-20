@@ -9,10 +9,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 function InfoPage() {
   const dispatch = useDispatch();
   const sales = useSelector(store => store.sale);
+  const featured = useSelector(store => store.featured)
 
   useEffect(() => {
     dispatch({ type: 'FETCH_SALE' });
   }, [dispatch]);
+
+  useEffect(()=> {
+    dispatch({type: 'FETCH_FEATURED'})
+  }, [dispatch])
 
   const [startdate, setStart] = useState(null);
   const [enddate, setEnd] = useState(null);
@@ -40,9 +45,10 @@ function InfoPage() {
   };
 
   return (
+    
     <div className="container">
       <p>Your Current and Previous Sales</p>
-      {/* <div>{JSON.stringify(sales)}</div> */}
+      {/* <div>{JSON.stringify(featured)}</div> */}
       <section className="sales">
         {sales.map((sale) => {
           const fromDate = sale.fromdate.substring(0, 10);
@@ -81,6 +87,9 @@ function InfoPage() {
           <input className="btn" type="submit" name="submit" value="Submit" />
         </div>
       </form>
+      <div> Test 
+      <div>{JSON.stringify(featured)}</div> 
+      </div>
     </div>
   );
 }

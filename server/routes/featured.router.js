@@ -13,7 +13,9 @@ router.get('/', (req, res) => {
         // ! User is logged in
         console.log('user', req.user);
         let parameters = [req.user.id];
-        let queryText = `SELECT * FROM "featured" WHERE "sales_id" = $1;`;
+        let queryText = `select s.id, s.user_id as user_id, sales_id,fromdate, todate , item, price, description from sales s
+        left outer join featured_items fi
+        on s.id = fi.sales_id WHERE user_id = $1 order by fromdate desc;`;;
         // STEP 2: Use the logged in users id (req.user.id) to GET
         // the list of pets.
         pool.query(queryText, parameters).then((result) => {

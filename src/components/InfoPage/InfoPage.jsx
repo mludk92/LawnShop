@@ -15,22 +15,24 @@ function InfoPage() {
     dispatch({ type: 'FETCH_SALE' });
   }, [dispatch]);
 
-  useEffect(()=> {
-    dispatch({type: 'FETCH_FEATURED'})
+  useEffect(() => {
+    dispatch({ type: 'FETCH_FEATURED' })
   }, [dispatch])
 
   const [startdate, setStart] = useState(null);
   const [enddate, setEnd] = useState(null);
-  const [error, setError] = useState('');  
+  const [error, setError] = useState('');
+  const [item, setItem] = useState('');
+  const [desc, setDesc] = useState('');
 
   const addSale = (event) => {
     event.preventDefault();
-  
+
     if (enddate && startdate && startdate > enddate) {
       setError('End date cannot be before the start date.');
       return;
     }
-  
+
     dispatch({
       type: 'ADDSALE',
       payload: {
@@ -38,30 +40,41 @@ function InfoPage() {
         enddate: enddate ? enddate.toISOString().substring(0, 10) : '',
       },
     });
-  
+
     setStart(null);
     setEnd(null);
     setError(''); // Clear the error message
   };
 
   return (
-    
+
     <div className="container">
       <p>Your Current and Previous Sales</p>
       {/* <div>{JSON.stringify(featured)}</div> */}
-      <section className="sales">
+      <section className="sales ">
         {sales.map((sale) => {
           const fromDate = sale.fromdate.substring(0, 10);
           const toDate = sale.todate.substring(0, 10);
 
+          // Filter the featured items related to the current sale
+          const saleFeatured = featured.filter((feature) => feature.sales_id === sale.id);
+
           return (
-            <div key={sale.id} className="sale-card">
+            <div key={sale.id} className="sale-card ripped-border">
               <h3>Start Date: {fromDate}</h3>
               <h3>End Date: {toDate}</h3>
+
+              {saleFeatured.map((feature) => (
+                <div key={feature.id}>
+                  <p>Item: {feature.item}</p>
+                  <p>Description: {feature.description}</p>
+                </div>
+              ))}
             </div>
           );
-        })} 
-       </section>
+        })}
+
+       </section >
       <form className="addSale" onSubmit={addSale}>
         <h2>Add Sale</h2>
         {error && <p className="error">{error}</p>}
@@ -90,7 +103,7 @@ function InfoPage() {
       <div> Test 
       <div>{JSON.stringify(featured)}</div> 
       </div>
-    </div>
+    </div >
   );
 }
 

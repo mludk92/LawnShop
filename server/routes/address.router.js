@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 // This route *should* return the logged in users pets
 router.get('/', (req, res) => {
-    console.log('/pet GET route');
+    console.log('/address GET route');
     // req.isAuthenticated() and req.user are provided by
     // Passport.
     console.log('is authenticated?', req.isAuthenticated());
@@ -13,7 +13,10 @@ router.get('/', (req, res) => {
         // ! User is logged in
         console.log('user', req.user);
         let parameters = [req.user.id];
-        let queryText = `SELECT * FROM "address" WHERE "user_id" = $1;`;
+        let queryText = `SELECT a.*, (sub.street || ', ' || sub.city || ', ' || sub.state || ', ' || sub.zip) as useraddress
+        FROM address a
+        LEFT OUTER JOIN (SELECT * FROM address WHERE user_id = $1) sub
+        ON a.id = sub.id; `;
         // STEP 2: Use the logged in users id (req.user.id) to GET
         // the list of pets.
         pool.query(queryText, parameters).then((result) => {

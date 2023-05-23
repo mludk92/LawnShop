@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         console.log('user', req.user);
         let parameters = [req.user.id];
         console.log(parameters,'params')
-        let queryText = `select * from sales where user_id = $1`;
+        let queryText = `select * from sales where user_id = $1 order by fromdate asc`;
         // STEP 2: Use the logged in users id (req.user.id) to GET
         // the list of pets.
         pool.query(queryText, parameters).then((result) => {

@@ -26,17 +26,17 @@ function InfoPage() {
 
   const addSale = (event) => {
     event.preventDefault();
-  
+
     if (enddate && startdate && startdate > enddate) {
       setError("End date cannot be before the start date.");
       return;
     }
-  
+
     if (!startdate) {
       setError("Please select a start date.");
       return;
     }
-  
+
     dispatch({
       type: "FETCH_NEWSALE",
       payload: {
@@ -44,36 +44,34 @@ function InfoPage() {
         todate: enddate ? enddate.toISOString().substring(0, 10) : "",
       },
     });
-  
+
     // Dispatch FETCH_SALE after adding the new sale
     dispatch({ type: "FETCH_SALE" });
-  
+
     setStart(null);
     setEnd(null);
     setError(""); // Clear the error message
   };
-  
-  
 
   return (
     <div className="container">
       <p>Your Current and Previous Sales</p>
       {/* <div>{JSON.stringify(featured)}</div> */}
-      <section className="sales ">
+      <section className="sales">
         {sales.map((sale) => {
           const fromDate = sale.fromdate ? sale.fromdate.substring(0, 10) : "";
           const toDate = sale.todate ? sale.todate.substring(0, 10) : "";
-  
+
           // Filter the featured items related to the current sale
           const saleFeatured = featured.filter(
             (feature) => feature.sales_id === sale.id
           );
-  
+
           return (
             <div key={sale.id} className="sale-card ripped-border">
               <h3>Start Date: {fromDate}</h3>
               <h3>End Date: {toDate}</h3>
-  
+
               {saleFeatured.map((feature) => (
                 <div key={feature.id}>
                   <p>Item: {feature.item}</p>
@@ -88,7 +86,7 @@ function InfoPage() {
         <h2>Add Sale</h2>
         {error && <p className="error">{error}</p>}
         <div className="addform">
-          <label htmlFor="Start Date">Start Date:</label>
+          <label htmlFor="startdate">Start Date:</label>
           <DatePicker
             selected={startdate}
             onChange={(date) => setStart(date)}
@@ -97,7 +95,7 @@ function InfoPage() {
             required
           />
 
-          <label htmlFor="End Date">End Date:</label>
+          <label htmlFor="enddate">End Date:</label>
           <DatePicker
             selected={enddate}
             onChange={(date) => setEnd(date)}
@@ -111,7 +109,6 @@ function InfoPage() {
         </div>
       </form>
       <div>
-        {" "}
         Test
         <div>{JSON.stringify(featured)}</div>
       </div>

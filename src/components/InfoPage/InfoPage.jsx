@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import "./InfoPage.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import FeaturedItems from "../FeaturedItems/FeaturedItems";
 
 function InfoPage() {
   const dispatch = useDispatch();
@@ -12,17 +12,14 @@ function InfoPage() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_SALE" });
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch({ type: "FETCH_FEATURED" });
   }, [dispatch]);
 
   const [startdate, setStart] = useState(null);
   const [enddate, setEnd] = useState(null);
   const [error, setError] = useState("");
-  const [item, setItem] = useState("");
-  const [desc, setDesc] = useState("");
+  const [selectedSale, setSelectedSale] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const addSale = (event) => {
     event.preventDefault();
@@ -45,24 +42,31 @@ function InfoPage() {
       },
     });
 
-    // Dispatch FETCH_SALE after adding the new sale
     dispatch({ type: "FETCH_SALE" });
 
     setStart(null);
     setEnd(null);
-    setError(""); // Clear the error message
+    setError("");
+  };
+
+  const openModal = (sale) => {
+    setSelectedSale(sale.id);
+    setIsModalOpen(true);
+  };
+  
+
+  const closeModal = () => {
+    setSelectedSale(null);
+    setIsModalOpen(false);
   };
 
   return (
     <div className="container">
       <h2>Your Current and Previous Sales</h2>
-      {/* <div>{JSON.stringify(featured)}</div> */}
       <section className="sales">
         {sales.map((sale) => {
           const fromDate = sale.fromdate ? sale.fromdate.substring(0, 10) : "";
           const toDate = sale.todate ? sale.todate.substring(0, 10) : "";
-
-          // Filter the featured items related to the current sale
           const saleFeatured = featured.filter(
             (feature) => feature.sales_id === sale.id
           );
@@ -78,6 +82,15 @@ function InfoPage() {
                   <p>Description: {feature.description}</p>
                 </div>
               ))}
+
+              <div className="button-container">
+                <button
+                  className="edit-button"
+                  onClick={() => openModal(sale)}
+                >
+                  Edit Dates / Add Featured Items
+                </button>
+              </div>
             </div>
           );
         })}
@@ -91,7 +104,7 @@ function InfoPage() {
             selected={startdate}
             onChange={(date) => setStart(date)}
             dateFormat="yyyy/MM/dd"
-            name="startdate" // Add name attribute
+            name="startdate"
             required
           />
 
@@ -100,7 +113,7 @@ function InfoPage() {
             selected={enddate}
             onChange={(date) => setEnd(date)}
             dateFormat="yyyy/MM/dd"
-            name="enddate" // Add name attribute
+            name="enddate"
             required
           />
         </div>
@@ -108,10 +121,12 @@ function InfoPage() {
           <input className="btn" type="submit" name="submit" value="Submit" />
         </div>
       </form>
-      <div>
-        Test
-        <div>{JSON.stringify(featured)}</div>
-      </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <FeaturedItems sale={selectedSale} closeModal={closeModal} />
+        </div>
+      )}
     </div>
   );
 }

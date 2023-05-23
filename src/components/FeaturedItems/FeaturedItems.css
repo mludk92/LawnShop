@@ -35,8 +35,34 @@
     width: 100%;
   }
 
-  .close {
-    position:absolute;
-    top: 900px;
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  .card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
   }
   
+  .edit-button,
+  .delete-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #eaeaea;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .edit-button {
+    color: #007bff;
+  }
+  
+  .delete-button {
+    color: #dc3545;
+  }

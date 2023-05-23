@@ -89,36 +89,27 @@ function FeaturedItems({ sale, closeModal }) {
       <h2 className="editfeat">Edit Featured Items</h2>
       <p>Selected Sale ID: {sale}</p>
       <form className="currentDates">
-        <p>Start Date:</p>
-        <DatePicker
-          selected={startDate ? new Date(startDate) : null}
-          onChange={handleStartDateChange}
-          dateFormat="yyyy/MM/dd"
-        />
-        <p>End Date:</p>
-        <DatePicker
-          selected={endDate ? new Date(endDate) : null}
-          onChange={handleEndDateChange}
-          dateFormat="yyyy/MM/dd"
-        />
+        {/* Date pickers */}
       </form>
       <section className="salesitems">
         {filteredItems.map((item, index) => (
-          <div key={item.item_id}>
+          <div key={item.item_id} className="card">
+            {/* Item information */}
             <p>Item: {item.item_id}</p>
+            {/* Input fields */}
             <input
               type="text"
               value={itemValues[index] || item.item}
               onChange={(e) => handleItemInputChange(index, e.target.value)}
             />
-            <p>Price:</p>
+            {/* Price input */}
             <input
               type="number"
               step="0.25"
               value={priceValues[index] || item.price}
               onChange={(e) => handlePriceInputChange(index, e.target.value)}
             />
-            <p>Description:</p>
+            {/* Description textarea */}
             <textarea
               value={itemDescriptionValues[index] || item.description}
               onChange={(e) =>
@@ -128,11 +119,21 @@ function FeaturedItems({ sale, closeModal }) {
               maxLength={1000}
             />
 
-            {/* Edit button */}
-            <button onClick={() => handleEditItem(item)}>Submit Edits</button>
-
-            {/* Delete button */}
-            <button onClick={() => handleDeleteItem(item)}>Delete</button>
+            {/* Edit and delete buttons */}
+            <div className="card-buttons">
+              <button
+                className="edit-button"
+                onClick={() => handleEditItem(item)}
+              >
+                Submit Edits
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteItem(item)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </section>

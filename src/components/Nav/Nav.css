@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 .nav {
   display: flex;
   justify-content: space-between;
@@ -15,6 +16,7 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: inset 0px 0px 50px rgb(2, 54, 6);
+  font-family: 'Permanent Marker', cursive;
 }
 
 
@@ -39,6 +41,7 @@
   padding: 24px 10px;
   text-decoration: underline;
   font-size: 20px;
+  font-family: 'Permanent Marker', cursive;
 
 
   /* these last two make the logout button in

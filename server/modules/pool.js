@@ -23,7 +23,9 @@ else {
     pool = new pg.Pool({
         host: 'localhost',
         port: 5432,
-        database: 'lawn_shop',   // 	💥 Change this to the name of your database!
+        database: 'lawn_shop',// 	💥 Change this to the name of your database!
+        user: 'mludkey'  ,
+        password: 'admin', 
     });
 }
 

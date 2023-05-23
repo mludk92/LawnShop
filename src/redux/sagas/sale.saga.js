@@ -24,8 +24,27 @@ function* fetchSale() {
   }
 }
 
+function* addNewSale(action) {
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+
+    const response = yield axios.post('/api/sales', action.payload, config);
+
+    // now that the session has given us a user object
+    // with an id and username set the client-side user object to let
+    // the client-side code know the user is logged in
+    yield put({ type: 'SET_NEWSALE', payload: response.data });
+  } catch (error) {
+    console.log('Sale post request failed', error);
+  }
+}
+
 function* saleSaga() {
   yield takeLatest('FETCH_SALE', fetchSale);
+  yield takeLatest('FETCH_NEWSALE', addNewSale);
 }
 
 export default saleSaga;

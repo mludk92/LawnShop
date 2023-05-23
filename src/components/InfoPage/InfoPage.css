@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 body{ 
   background-image: url("/public/images/grass.png");
   background-repeat: no-repeat;
   background-size: cover;
+  font-family: 'Permanent Marker', cursive;
 }
 
 .addSale {
@@ -39,6 +42,7 @@ body{
     width: calc(33.33% - 20px); /* 33.33% width with some spacing */
     margin-right: 20px;
     margin-bottom: 20px;
+    font-family: 'Permanent Marker', cursive;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

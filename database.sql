@@ -6,14 +6,14 @@ CREATE TABLE "user" (
 
 CREATE TABLE sales (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES "user"(id),
   fromdate DATE NOT NULL,
   todate DATE NOT NULL
 );
 
 CREATE TABLE address (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES "user"(id),
   city VARCHAR(50) NOT NULL,
   state VARCHAR(50) NOT NULL,
   street VARCHAR(300) null,

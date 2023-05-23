@@ -29,23 +29,25 @@ router.get('/', (req, res) => {
     }
 });
 
-// router.post('/', (req, res) => {
-//     console.log('/pet POST route');
-//     console.log(req.body);
-//     console.log('is authenticated?', req.isAuthenticated());
-//     console.log('user', req.user);
-//     if(req.isAuthenticated()) {
-//         let queryText = `INSERT INTO "pets" ("name", "user_id") VALUES ($1, $2);`;
-//         pool.query(queryText, [req.body.name, req.user.id]).then(results => {
-//             res.sendStatus(201);
-//         }).catch(error => {
-//             console.log(`error ${error}`);
-//             res.sendStatus(500);
-//         })
-//     } else {
-//         res.sendStatus(403);
-//     }
+router.post('/', (req, res) => {
+    console.log('/sales POST route');
+    console.log(req.body);
+    console.log('is authenticated?', req.isAuthenticated());
+    console.log('user', req.user);
+    if(req.isAuthenticated()) {
+        let queryText = `insert into sales(user_id ,fromdate, todate)
+        values($1 , $2, $3)`;
+        let values = [req.user.id, req.body.fromdate, req.body.todate];
+        pool.query(queryText, values).then(results => {
+            res.sendStatus(201);
+        }).catch(error => {
+            console.log(`error ${error}`);
+            res.sendStatus(500);
+        })
+    } else {
+        res.sendStatus(403);
+    }
     
-// });
+});
 
 module.exports = router;

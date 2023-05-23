@@ -1,5 +1,3 @@
-// FeaturedItems.js
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
@@ -67,7 +65,10 @@ function FeaturedItems({ sale, closeModal }) {
 
   const handleDeleteItem = (item) => {
     // Dispatch an action with the sales_id and item_id
-    dispatch({ type: "DELETE_FEATURED_ITEM", payload: { sales_id: item.sales_id, item_id: item.item_id } });
+    dispatch({
+      type: "DELETE_FEATURED_ITEM",
+      payload: { sales_id: item.sales_id, item_id: item.item_id },
+    });
   };
 
   useEffect(() => {
@@ -83,6 +84,39 @@ function FeaturedItems({ sale, closeModal }) {
     endDateValue,
     itemDescriptionValues,
   ]);
+
+  const [newItem, setNewItem] = useState({
+    item: "",
+    price: "",
+    description: "",
+  });
+
+  const handleNewItemChange = (e) => {
+    const { name, value } = e.target;
+    setNewItem((prevItem) => ({
+      ...prevItem,
+      [name]: value,
+    }));
+  };
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    // Dispatch an action with the new item data
+    dispatch({
+      type: "INSERT_FEATURED",
+      payload: { sales_id: sale, ...newItem },
+    });
+    setNewItem({
+      item: "",
+      price: "",
+      description: "",
+    });
+  };
+
+  useEffect(() => {
+    // Fetch items after adding a new item
+    dispatch({ type: "FETCH_FEATURED" });
+  }, [dispatch]);
 
   return (
     <div className="containthepage">
@@ -137,7 +171,38 @@ function FeaturedItems({ sale, closeModal }) {
           </div>
         ))}
       </section>
-
+      <div className="newitem">
+        {/* New item form */}
+        <div className="card">
+          <h3>Add New Item</h3>
+          <input
+            type="text"
+            name="item"
+            value={newItem.item}
+            onChange={handleNewItemChange}
+            placeholder="Item"
+          />
+          <input
+            type="number"
+            step="0.25"
+            name="price"
+            value={newItem.price}
+            onChange={handleNewItemChange}
+            placeholder="Price"
+          />
+          <textarea
+            name="description"
+            value={newItem.description}
+            onChange={handleNewItemChange}
+            rows={4}
+            maxLength={1000}
+            placeholder="Description"
+          />
+          <button type="button" onClick={handleAddItem}>
+            Add Item
+          </button>
+        </div>
+      </div>
       <button className="close" type="button" onClick={closeModal}>
         Close
       </button>

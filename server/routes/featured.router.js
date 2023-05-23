@@ -30,32 +30,36 @@ router.get('/', (req, res) => {
 
 // POST
 router.post('/', (req, res) => {
-  console.log('/featured POST route');
-  console.log(req.body);
-  console.log('is authenticated?', req.isAuthenticated());
-  console.log('user', req.user);
-  if (req.isAuthenticated()) {
-    const queryText = `INSERT INTO featured_items(sales_id, item, price, description)
-      VALUES($1, $2, $3, $4);`;
-    const values = [
-      req.body.sales_id,
-      req.body.item,
-      req.body.price,
-      req.body.description,
-    ];
-    pool
-      .query(queryText, values)
-      .then((results) => {
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        console.log(`error ${error}`);
-        res.sendStatus(500);
-      });
-  } else {
-    res.sendStatus(403);
-  }
-});
+    console.log('/featured POST route');
+    console.log(req.body);
+    console.log('is authenticated?', req.isAuthenticated());
+    console.log('user', req.user);
+    if (req.isAuthenticated()) {
+      if (req.body.item) {
+        const queryText = `INSERT INTO featured_items(sales_id, item, price, description)
+          VALUES($1, $2, $3, $4);`;
+        const values = [
+          req.body.sales_id,
+          req.body.item,
+          req.body.price,
+          req.body.description,
+        ];
+        pool
+          .query(queryText, values)
+          .then((results) => {
+            res.sendStatus(201);
+          })
+          .catch((error) => {
+            console.log(`error ${error}`);
+            res.sendStatus(500);
+          });
+      } else {
+        res.status(400).send('Missing item property');
+      }
+    } else {
+      res.sendStatus(403);
+    }
+  });
 
 // DELETE
 router.delete('/', (req, res) => {
@@ -80,4 +84,27 @@ router.delete('/', (req, res) => {
   }
 });
 
+//PUT
+router.put('/', (req, res) => {
+    console.log('/featured Put route');
+    console.log(req.body);
+    console.log('is authenticated?', req.isAuthenticated());
+    console.log('user', req.user);
+    if (req.isAuthenticated()) {
+      const queryText = `update featured_items set item = '$1,
+       description = $2 where sales_id = 3 and id = 2 ;`;
+      const values = [req.body.sales_id, req.body.item_id]; //update with correct values .
+      pool
+        .query(queryText, values)
+        .then((results) => {
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          console.log(`error ${error}`);
+          res.sendStatus(500);
+        });
+    } else {
+      res.sendStatus(403);
+    }
+  });
 module.exports = router;

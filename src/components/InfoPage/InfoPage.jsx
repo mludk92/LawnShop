@@ -55,7 +55,7 @@ function InfoPage() {
 
   return (
     <div className="container">
-      <p>Your Current and Previous Sales</p>
+      <h2>Your Current and Previous Sales</h2>
       {/* <div>{JSON.stringify(featured)}</div> */}
       <section className="sales">
         {sales.map((sale) => {

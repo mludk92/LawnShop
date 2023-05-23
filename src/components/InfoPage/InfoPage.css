@@ -6,6 +6,10 @@ body{
   background-size: cover;
   font-family: 'Permanent Marker', cursive;
 }
+h2{ 
+  font-family: 'Permanent Marker', cursive;
+  font-size: 30px;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -72,6 +76,7 @@ body{
   width: calc(30% - 10px); /* 33.33% width with some spacing */
   margin-bottom: 20px;
   font-family: 'Permanent Marker', cursive;
+  font-size: 15px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;

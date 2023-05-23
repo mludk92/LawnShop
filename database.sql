@@ -1,11 +1,4 @@
-
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
-
---database lawn_shop
-CREATE TABLE users (
+CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(80) UNIQUE NOT NULL,
   password VARCHAR(1000) NOT NULL
@@ -34,37 +27,46 @@ CREATE TABLE featured_items (
   price DECIMAL null,
   description VARCHAR(1000) null
 );
-
---test data
 --------------------------------------------
-insert into users( username, password)
+insert into "user"( username, password)
 values('admin' , 'admin');
 
-select * from users ;
+select * from "user" ;
 --------------------------------------------
 insert into sales(user_id ,fromdate, todate)
-values(1,'05/16/2023' , '05/20/2023');
+values(8,'05/16/2023' , '05/20/2023'),
+(8,'05/22/2023' , '05/30/2023');
 
 select * from sales;
 --------------------------------------------
 insert into address (user_id, city, state, street, zip)
-values(1,'mankato', 'Minnesota', '410 S 5th street' , 56001);
+values(2,'mankato', 'Minnesota', '410 S 5th street' , 56001);
 
 select * from address;
 --------------------------------------------
 insert into featured_items(sales_id, item, price, description)
-values(1, 'MTG Cards', 2000.00, 'Rare Black Lotis Alpha'),
-(1,'couch',5.00, 'old couch good contition 5 obo');
+values(3, 'Dart Board', 20.00, 'Dart Board no working sound'),
+(4,'vase',15.00, 'jade vase');
 
 select * from featured_items;
 --------------------------------------------
 
+select s.id, s.user_id, sales_id, item, price, description,fromdate, todate from sales s
+                         left outer join featured_items fi
+                         on s.id = fi.sales_id WHERE "user_id" = 8 order by fromdate desc;
+
+SELECT a.*, (sub.street || ', ' || sub.city || ', ' || sub.state || ', ' || sub.zip) as useraddress
+FROM address a
+LEFT OUTER JOIN (SELECT * FROM address WHERE user_id = 8) sub
+ON a.id = sub.id;
+
+
+
 --------------------------------------------
-select * from users;
+select * from "user";
 select * from sales;
 select * from address;
 select * from featured_items;
 --------------------------------------------
-
 
 

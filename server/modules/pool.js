@@ -24,8 +24,8 @@ else {
         host: 'localhost',
         port: 5432,
         database: 'lawn_shop',// 	💥 Change this to the name of your database!
-        // user: 'mludkey'  ,
-        // password: 'admin', 
+        user: 'mludkey'  ,
+        password: 'admin', 
     });
 }
 

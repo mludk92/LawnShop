@@ -56,19 +56,21 @@ function FeaturedItems({ sale, closeModal }) {
     updatedDescriptions[index] = value;
     setItemDescriptionValues(updatedDescriptions);
   };
-
   const handleEditItem = (item) => {
-    const formattedItem = {
+    const updatedItem = {
       ...item,
-      fromdate: format(new Date(item.fromdate), "yyyy-MM-dd"),
-      todate: format(new Date(item.todate), "yyyy-MM-dd"),
+      item: itemValues[item.item_id] || item.item,
+      price: priceValues[item.item_id] || item.price,
+      description: itemDescriptionValues[item.item_id] || item.description,
+      fromdate: format(new Date(startDateValue), "yyyy-MM-dd"),
+      todate: format(new Date(endDateValue), "yyyy-MM-dd"),
     };
-    
+
     // Dispatch an action with the updated item data
-    console.log("Edit Payload:", formattedItem); // Log the payload
-    dispatch({ type: "EDIT_FEATURED", payload: formattedItem });
+    dispatch({ type: "EDIT_FEATURED", payload: updatedItem });
+
+    console.log("Edit Payload:", updatedItem); // Log the payload after dispatching
   };
-  
 
   const handleDeleteItem = (item) => {
     // Dispatch an action with the sales_id and item_id
@@ -144,28 +146,36 @@ function FeaturedItems({ sale, closeModal }) {
         />
       </form>
       <section className="salesitems">
-        {filteredItems.map((item, index) => (
+        {filteredItems.map((item) => (
           <div key={item.item_id} className="card">
             {/* Item information */}
             <p>Item: {item.item_id}</p>
             {/* Input fields */}
             <input
               type="text"
-              value={itemValues[index] || item.item}
-              onChange={(e) => handleItemInputChange(index, e.target.value)}
+              value={itemValues[item.item_id] || item.item}
+              onChange={(e) =>
+                handleItemInputChange(
+                  item.item_id,
+                  e.target.value,
+                  item.item_id
+                )
+              }
             />
             {/* Price input */}
             <input
               type="number"
               step="0.25"
-              value={priceValues[index] || item.price}
-              onChange={(e) => handlePriceInputChange(index, e.target.value)}
+              value={priceValues[item.item_id] || item.price}
+              onChange={(e) =>
+                handlePriceInputChange(item.item_id, e.target.value)
+              }
             />
             {/* Description textarea */}
             <textarea
-              value={itemDescriptionValues[index] || item.description}
+              value={itemDescriptionValues[item.item_id] || item.description}
               onChange={(e) =>
-                handleDescriptionInputChange(index, e.target.value)
+                handleDescriptionInputChange(item.item_id, e.target.value)
               }
               rows={4}
               maxLength={1000}
@@ -179,6 +189,7 @@ function FeaturedItems({ sale, closeModal }) {
               >
                 Submit Edits
               </button>
+
               <button
                 className="delete-button"
                 onClick={() => handleDeleteItem(item)}

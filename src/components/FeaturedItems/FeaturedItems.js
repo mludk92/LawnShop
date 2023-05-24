@@ -125,13 +125,13 @@ function FeaturedItems({ sale, closeModal }) {
       <form className="currentDates">
         <p>Start Date:</p>
         <DatePicker
-          selected={startDate ? new Date(startDate) : null}
+          selected={startDateValue ? new Date(startDateValue) : null}
           onChange={handleStartDateChange}
           dateFormat="yyyy/MM/dd"
         />
         <p>End Date:</p>
         <DatePicker
-          selected={endDate ? new Date(endDate) : null}
+          selected={endDateValue ? new Date(endDateValue) : null}
           onChange={handleEndDateChange}
           dateFormat="yyyy/MM/dd"
         />

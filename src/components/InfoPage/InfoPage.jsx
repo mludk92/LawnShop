@@ -21,6 +21,8 @@ function InfoPage() {
   const [selectedSale, setSelectedSale] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const currentDate = new Date();
+
   const addSale = (event) => {
     event.preventDefault();
 
@@ -53,11 +55,17 @@ function InfoPage() {
     setSelectedSale(sale.id);
     setIsModalOpen(true);
   };
-  
 
   const closeModal = () => {
     setSelectedSale(null);
     setIsModalOpen(false);
+  };
+
+  const isCurrentDateInRange = (fromDate, toDate) => {
+    const start = new Date(fromDate);
+    const end = new Date(toDate);
+
+    return currentDate >= start && currentDate <= end;
   };
 
   return (
@@ -70,9 +78,11 @@ function InfoPage() {
           const saleFeatured = featured.filter(
             (feature) => feature.sales_id === sale.id
           );
+          const isCurrentDateInSaleRange = isCurrentDateInRange(fromDate, toDate);
+          const cardClassName = isCurrentDateInSaleRange ? "sale-card flash-border" : "sale-card";
 
           return (
-            <div key={sale.id} className="sale-card ripped-border">
+            <div key={sale.id} className={cardClassName}>
               <h3>Start Date: {fromDate}</h3>
               <h3>End Date: {toDate}</h3>
 
@@ -84,10 +94,7 @@ function InfoPage() {
               ))}
 
               <div className="button-container">
-                <button
-                  className="edit-button"
-                  onClick={() => openModal(sale)}
-                >
+                <button className="edit-button" onClick={() => openModal(sale)}>
                   Edit Dates / Add Featured Items
                 </button>
               </div>

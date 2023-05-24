@@ -49,10 +49,32 @@ function* insertFeaturedItem(action) {
   }
 }
 
+// editFeaturedItem Saga
+function* editFeaturedItem(action) {
+  try {
+    const { payload } = action;
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+
+    yield axios.put('/api/featured', payload, config);
+
+    // Dispatch an action to update the Redux store
+    yield put({ type: 'FETCH_FEATURED' });
+  } catch (error) {
+    console.log('Featured item edit request failed', error);
+    // Dispatch an action to handle the error
+    yield put({ type: 'EDIT_FEATURED_ITEM_FAILURE', payload: error.response.data });
+  }
+}
+
+
 function* featuredSaga() {
   yield takeLatest('FETCH_FEATURED', fetchFeatured);
   yield takeLatest('DELETE_FEATURED_ITEM', deleteFeaturedItem);
   yield takeLatest('INSERT_FEATURED', insertFeaturedItem);
+  yield takeLatest('EDIT_FEATURED', editFeaturedItem);
 }
 
 export default featuredSaga;

@@ -58,10 +58,17 @@ function FeaturedItems({ sale, closeModal }) {
   };
 
   const handleEditItem = (item) => {
-    // Handle the edit functionality
+    const formattedItem = {
+      ...item,
+      fromdate: format(new Date(item.fromdate), "yyyy-MM-dd"),
+      todate: format(new Date(item.todate), "yyyy-MM-dd"),
+    };
+    
     // Dispatch an action with the updated item data
-    dispatch({ type: "EDIT_FEATURED_ITEM", payload: item });
+    console.log("Edit Payload:", formattedItem); // Log the payload
+    dispatch({ type: "EDIT_FEATURED", payload: formattedItem });
   };
+  
 
   const handleDeleteItem = (item) => {
     // Dispatch an action with the sales_id and item_id

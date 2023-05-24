@@ -86,25 +86,44 @@ router.delete('/', (req, res) => {
 
 //PUT
 router.put('/', (req, res) => {
-    console.log('/featured Put route');
+    console.log('/featured PUT route');
     console.log(req.body);
     console.log('is authenticated?', req.isAuthenticated());
     console.log('user', req.user);
     if (req.isAuthenticated()) {
-      const queryText = `update featured_items set item = '$1,
-       description = $2 where sales_id = 3 and id = 2 ;`;
-      const values = [req.body.sales_id, req.body.item_id]; //update with correct values .
-      pool
-        .query(queryText, values)
-        .then((results) => {
-          res.sendStatus(201);
-        })
-        .catch((error) => {
-          console.log(`error ${error}`);
-          res.sendStatus(500);
-        });
+      if (req.body.sales_id && req.body.item_id) {
+        const queryText1 = `UPDATE featured_items
+          SET item = $1, description = $2, price = $3
+          WHERE sales_id = $4 AND id = $5;`;
+        const queryText2 = `UPDATE sales
+          SET fromdate = $6, todate = $7
+          WHERE id = $4;`;
+        const values = [
+          req.body.item,
+          req.body.description,
+          req.body.price,
+          req.body.sales_id,
+          req.body.item_id,
+          req.body.fromdate.substring(0, 10),
+          req.body.todate.substring(0, 10)
+        ];
+        pool
+          .query(queryText1, values)
+          .then(() => pool.query(queryText2, values))
+          .then(() => {
+            res.sendStatus(200);
+          })
+          .catch((error) => {
+            console.log('Error updating featured item:', error);
+            res.sendStatus(500);
+          });
+      } else {
+        res.status(400).send('Missing sales_id or item_id');
+      }
     } else {
       res.sendStatus(403);
     }
   });
 module.exports = router;
+
+

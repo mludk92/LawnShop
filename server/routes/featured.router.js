@@ -96,20 +96,24 @@ router.put('/', (req, res) => {
           SET item = $1, description = $2, price = $3
           WHERE sales_id = $4 AND id = $5;`;
         const queryText2 = `UPDATE sales
-          SET fromdate = $6, todate = $7
-          WHERE id = $4;`;
-        const values = [
+          SET fromdate = $1, todate = $2
+          WHERE id = $3;`;
+        const values1 = [
           req.body.item,
           req.body.description,
           req.body.price,
           req.body.sales_id,
           req.body.item_id,
-          req.body.fromdate.substring(0, 10),
-          req.body.todate.substring(0, 10)
         ];
+        const values2 = [
+            
+            req.body.fromdate.substring(0, 10),
+            req.body.todate.substring(0, 10),
+            req.body.sales_id
+          ];
         pool
-          .query(queryText1, values)
-          .then(() => pool.query(queryText2, values))
+          .query(queryText1, values1)
+          .then(() => pool.query(queryText2, values2))
           .then(() => {
             res.sendStatus(200);
           })

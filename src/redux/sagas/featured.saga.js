@@ -63,9 +63,7 @@ function* editFeaturedItem(action) {
     // Dispatch an action to update the Redux store
     yield put({ type: 'FETCH_FEATURED' });
   } catch (error) {
-    console.log('Featured item edit request failed', error);
-    // Dispatch an action to handle the error
-    yield put({ type: 'EDIT_FEATURED_ITEM_FAILURE', payload: error.response.data });
+    console.log('Featured item edit request failed in saga ', error);
   }
 }
 

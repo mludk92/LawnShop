@@ -149,7 +149,7 @@ function FeaturedItems({ sale, closeModal }) {
         {filteredItems.map((item) => (
           <div key={item.item_id} className="card">
             {/* Item information */}
-            <p>Item: {item.item_id}</p>
+            <p>Item: {item.item}</p>
             {/* Input fields */}
             <input
               type="text"

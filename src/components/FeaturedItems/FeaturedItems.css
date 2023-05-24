@@ -5,6 +5,8 @@
   position: absolute;
   top: 0;
   left: 0; /* Updated property */
+  padding-left: 20px;
+  
   }
   
   .currentDates {
@@ -28,6 +30,8 @@
   .salesitems {
     display: flex;
     gap: 20px;
+    background-image: url("/public/images/ripbox.jpeg");
+    
   }
   
   .salesitem {
@@ -35,6 +39,8 @@
     grid-template-columns: auto auto;
     gap: 10px;
     align-items: center;
+    
+
   }
   
   .salesitem label {
@@ -55,11 +61,20 @@
     margin-bottom: 10px;
     background-color: #f9f9f9;
     border-radius: 5px;
+    background-image: url("/public/images/pin.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 1px 1px 0px rgb(104, 104, 104),
+              2px 2px 0px rgb(142, 142, 142),
+              5px 5px 0px rgb(94, 94, 94),
+              6px 8px 0px rgb(102, 102, 102);
+  max-width: 500px;
   }
   .card-buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: auto;
+    
   }
   
   .edit-button,

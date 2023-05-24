@@ -56,6 +56,7 @@
 
   
   .card {
+    transform: rotate(calc(-5deg + 10deg * random()));
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
@@ -66,8 +67,7 @@
   background-size: cover;
   box-shadow: 1px 1px 0px rgb(104, 104, 104),
               2px 2px 0px rgb(142, 142, 142),
-              5px 5px 0px rgb(94, 94, 94),
-              6px 8px 0px rgb(102, 102, 102);
+              5px 5px 20px rgb(51, 51, 51);
   max-width: 500px;
   }
   .card-buttons {

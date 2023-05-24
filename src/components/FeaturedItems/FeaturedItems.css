@@ -1,16 +1,29 @@
 .editfeat {
-    position:absolute;
-
-    text-align: center; 
-    top: 60px;
+  display: flex;
+  justify-content: flex-start; /* Updated value */
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  left: 0; /* Updated property */
   }
   
   .currentDates {
     display: flex;
-    justify-content: center;
+    align-items: center; /* Added property */
+    justify-content: flex-end;
     gap: 10px;
-   
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 20px;
   }
+  
+  .currentDates input[type="text"] {
+    font-size: 20px;
+    width: auto;
+  }
+  
+  
   
   .salesitems {
     display: flex;

@@ -123,7 +123,18 @@ function FeaturedItems({ sale, closeModal }) {
       <h2 className="editfeat">Edit Featured Items</h2>
       <p>Selected Sale ID: {sale}</p>
       <form className="currentDates">
-        {/* Date pickers */}
+        <p>Start Date:</p>
+        <DatePicker
+          selected={startDate ? new Date(startDate) : null}
+          onChange={handleStartDateChange}
+          dateFormat="yyyy/MM/dd"
+        />
+        <p>End Date:</p>
+        <DatePicker
+          selected={endDate ? new Date(endDate) : null}
+          onChange={handleEndDateChange}
+          dateFormat="yyyy/MM/dd"
+        />
       </form>
       <section className="salesitems">
         {filteredItems.map((item, index) => (

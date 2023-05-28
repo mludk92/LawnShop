@@ -35,8 +35,8 @@ function UserPage() {
   const [street, setStreet] = useState(null)
   const [zip, setZip] = useState(null)
   const mapContainerStyle = {
-    width: '82.15vw',
-    height: '85vh'
+    width: '100%',
+    height: '100%'
   }
   const center = {
     lat:44.152959 , 

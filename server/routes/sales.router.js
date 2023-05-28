@@ -56,27 +56,29 @@ router.delete('/', (req, res) => {
     console.log('is authenticated?', req.isAuthenticated());
     console.log('user', req.user);
     if (req.isAuthenticated()) {
-        let queryText = `
-            BEGIN; 
-            -- First statement
-            DELETE FROM featured_items WHERE sales_id = $1;
-            -- Second statement
-            DELETE FROM sales WHERE id = $1;
-            COMMIT;`;
-        let values = [req.body.id];
-        pool.query(queryText, values)
-            .then(results => {
-                console.log('Deletion successful');
-                res.sendStatus(201);
-            })
-            .catch(error => {
-                console.log('Error in Sale Delete:', error);
-                res.sendStatus(500);
-            });
+      const saleId = req.body.id; // Use req.body.id to access the saleId
+  
+      const deleteFeaturedItemsQuery = `DELETE FROM featured_items WHERE sales_id = $1`;
+      const deleteSaleQuery = `DELETE FROM sales WHERE id = $1`;
+  
+      pool.query(deleteFeaturedItemsQuery, [saleId])
+        .then(() => {
+          return pool.query(deleteSaleQuery, [saleId]);
+        })
+        .then(() => {
+          console.log('Deletion successful');
+          res.sendStatus(201);
+        })
+        .catch(error => {
+          console.log('Error in Sale Delete:', error);
+          res.sendStatus(500);
+        });
     } else {
-        res.sendStatus(403);
+      res.sendStatus(403);
     }
-});
+  });
+  
+  
 
 
 module.exports = router;

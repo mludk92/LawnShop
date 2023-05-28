@@ -43,22 +43,25 @@ function* addNewSale(action) {
 }
 
 function* deleteSale(action) {
-  try { 
+  try {
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
-    }
-    const response = yield axios.delete('/api/sales', action.payload, config)
-    yield put({type: 'DELETE_SALE', payload: response.data})
-  }catch(error) {
-    console.log('Delete request failed in saga' , error )
+      data: action.payload, // Include the payload in the 'data' property
+    };
+
+    const response = yield axios.delete('/api/sales', config);
+    yield put({ type: 'DELETE_SALE', payload: response.data });
+  } catch (error) {
+    console.log('Delete request failed in saga', error);
   }
 }
+
 
 function* saleSaga() {
   yield takeLatest('FETCH_SALE', fetchSale);
   yield takeLatest('FETCH_NEWSALE', addNewSale);
-  yield takeLastest('FETCH_DELETESALE' , deleteSale ) 
+  yield takeLatest('FETCH_DELETESALE' , deleteSale ) 
 }
 
 export default saleSaga;

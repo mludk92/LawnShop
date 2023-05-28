@@ -53,7 +53,10 @@ function InfoPage() {
 
   const deleteSale = (saleId) => {
     dispatch({ type: "FETCH_DELETESALE", payload: { id: saleId } });
+    dispatch({ type: "FETCH_SALE" }); 
   };
+  
+  
 
   const openModal = (sale) => {
     setSelectedSale(sale.id);

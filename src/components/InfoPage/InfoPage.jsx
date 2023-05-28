@@ -51,6 +51,10 @@ function InfoPage() {
     setError("");
   };
 
+  const deleteSale = (saleId) => {
+    dispatch({ type: "FETCH_DELETESALE", payload: { id: saleId } });
+  };
+
   const openModal = (sale) => {
     setSelectedSale(sale.id);
     setIsModalOpen(true);
@@ -83,6 +87,12 @@ function InfoPage() {
 
           return (
             <div key={sale.id} className={cardClassName}>
+              <button
+                className="delete-button"
+                onClick={() => deleteSale(sale.id)}
+              >
+                &#10006;
+              </button>
               <h3>Start Date: {fromDate}</h3>
               <h3>End Date: {toDate}</h3>
 

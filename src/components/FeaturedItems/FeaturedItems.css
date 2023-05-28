@@ -81,14 +81,17 @@
   .delete-button {
     margin-left: 10px;
     padding: 5px 10px;
-    background-color: #eaeaea;
-    border: none;
-    border-radius: 3px;
+    background-color: burlywood;
+  font-family: 'Permanent Marker', cursive;
+  color:black;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
     cursor: pointer;
   }
   
   .edit-button {
-    color: #007bff;
+    color: black;
   }
   
   .delete-button {

@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+button{ 
+  font-family: 'Permanent Marker', cursive;
+  background-color: burlywood;
+  color:black;
+  border-radius: 10%;
+}
 body{ 
   background-image: url("/public/images/grass.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  /* background-repeat: no-repeat; */
+  background-size:cover;
   font-family: 'Permanent Marker', cursive;
 }
 h2{ 
@@ -61,6 +67,7 @@ h2{
   background-color: burlywood;
   color:black
 }
+
 
 
 

@@ -50,4 +50,33 @@ router.post('/', (req, res) => {
     
 });
 
+router.delete('/', (req, res) => {
+    console.log('/sales DELETE route');
+    console.log(req.body);
+    console.log('is authenticated?', req.isAuthenticated());
+    console.log('user', req.user);
+    if (req.isAuthenticated()) {
+        let queryText = `
+            BEGIN; 
+            -- First statement
+            DELETE FROM featured_items WHERE sales_id = $1;
+            -- Second statement
+            DELETE FROM sales WHERE id = $1;
+            COMMIT;`;
+        let values = [req.body.id];
+        pool.query(queryText, values)
+            .then(results => {
+                console.log('Deletion successful');
+                res.sendStatus(201);
+            })
+            .catch(error => {
+                console.log('Error in Sale Delete:', error);
+                res.sendStatus(500);
+            });
+    } else {
+        res.sendStatus(403);
+    }
+});
+
+
 module.exports = router;

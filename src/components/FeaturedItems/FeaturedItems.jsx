@@ -127,6 +127,12 @@ function FeaturedItems({ sale, closeModal }) {
     dispatch({ type: "FETCH_FEATURED" });
   }, [dispatch]);
 
+  const handleCloseModal = () => {
+    dispatch({ type: "FETCH_SALE" }); // Dispatch FETCH_SALE action
+    closeModal(); // Close the modal
+  };
+
+
   return (
     <div className="containthepage">
       <h2 className="editfeat">Edit Featured Items</h2>
@@ -232,9 +238,10 @@ function FeaturedItems({ sale, closeModal }) {
           </button>
         </div>
       </div>
-      <button className="close" type="button" onClick={closeModal}>
+      <button className="close" type="button" onClick={handleCloseModal}>
         Close
       </button>
+
     </div>
   );
 }

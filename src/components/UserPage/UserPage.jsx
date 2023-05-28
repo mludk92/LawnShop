@@ -10,6 +10,7 @@ import {
   InfoWindow
  } from '@react-google-maps/api'; 
  import { formatRelative } from 'date-fns';
+ import mapStyles from './mapStyles';
 
  import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete'
  //import { ComboBox, ComboBoxInput, ComboBoxPopover, ComboboxList, ComboBoxOption} from "@reach/combobox/styles.css"
@@ -33,13 +34,30 @@ function UserPage() {
   const [stateName, setStateName] = useState(null)
   const [street, setStreet] = useState(null)
   const [zip, setZip] = useState(null)
-
+  const mapContainerStyle = {
+    width: '82.15vw',
+    height: '85vh'
+  }
+  const center = {
+    lat:44.152959 , 
+    lng:-93.944348,
+  }
+  const options = {
+    styles: mapStyles,
+    disableDefaultUI: true,
+    zoomControl: true,
+  }
 
   if (loadError) return "Error loading maps"
   if (!isLoaded) return "Loading Maps"
   return (
     <div className="container">
-      <div className='MapContainer'>basemap goes here </div>
+      <div className='MapContainer'><GoogleMap 
+      mapContainerStyle={mapContainerStyle}
+      zoom ={15}
+      center= {center}
+      options = {options}> </GoogleMap></div>
+      
       <div> Test 
       <div>{JSON.stringify(address)}</div> 
       </div>

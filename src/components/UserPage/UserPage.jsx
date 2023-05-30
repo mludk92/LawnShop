@@ -20,8 +20,8 @@ function UserPage() {
   const addresses = useSelector((store) => store.address);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: '',
-    libraries: UserPage.libraries, // Access libraries from the static class property
+    googleMapsApiKey: 'AIzaSyDrV5WgmwoHXY0i_PUEKFUEaJfAn2sEa-o',
+    libraries, 
   });
 
   useEffect(() => {

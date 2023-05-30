@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UserPage.css';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import axios from 'axios';
 import {
   GoogleMap,
   useLoadScript,
@@ -11,16 +11,17 @@ import {
 } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 import mapStyles from './mapStyles';
+
 const libraries = ['places'];
 
 function UserPage() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const addresses = useSelector((store) => store.address);
-  
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: '',
-    libraries,
+    libraries: UserPage.libraries, // Access libraries from the static class property
   });
 
   useEffect(() => {
@@ -32,7 +33,7 @@ function UserPage() {
   const [center, setCenter] = useState({ lat: 40.748817, lng: -73.985428 });
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [arrayOfItems, setArrayOfItems] = useState([]);
+  const [routeData, setRouteData] = useState(null); // State variable to store route data
 
   useEffect(() => {
     if (isLoaded && addresses.length > 0) {
@@ -59,24 +60,21 @@ function UserPage() {
   if (!isLoaded) return 'Loading Maps';
 
   const generateAndSendRoute = () => {
-    // Generate the route using the selectedItems array
-    // Use the Google Routing API
+    const selectedAddresses = selectedItems.map((item) => `${item.street}, ${item.city}`);
+    const startAddress = addresses.find((item) => item.useraddress !== null);
+    const startAddressString = startAddress ? `${startAddress.street}, ${startAddress.city}` : '';
+    console.log(selectedAddresses, startAddressString, 'req.body sending')
 
-    // Send the route via email
-    // Implement the email sending functionality
   };
 
   const removeFromArray = (id) => {
     const updatedItems = selectedItems.filter((item) => item.id !== id);
     setSelectedItems(updatedItems);
-    
-  
-    // Check if the selectedMarker is removed and set it to null
+
     if (selectedMarker && selectedMarker.id === id) {
       setSelectedMarker(null);
     }
   };
-  
 
   return (
     <div className="container">
@@ -88,42 +86,51 @@ function UserPage() {
           center={center}
           options={options}
         >
-          {markers.map((marker) => (
-            <Marker
-              key={marker.id}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              onMouseOver={() => {
-                setSelectedMarker(marker);
-                setOpenPopup(true);
-              }}
-              onClick={() => {
-                if (!selectedItems.some((item) => item.id === marker.id)) {
-                  const updatedItems = [...selectedItems, marker];
-                  setSelectedItems(updatedItems);
-                }
-              }}
-              icon={{
-                url: marker.lat === center.lat ? '/images/house.png' : '/images/ls.png',
-                scaledSize: new window.google.maps.Size(60, 60),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(18, 18),
-              }}
-              options={{
-                label: selectedItems.some((item) => item.id === marker.id) ? {
-                  text: 'Selected',
-                  color: 'black',
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                  background: 'rgba(0, 0, 255, 0.3)',
-                  borderRadius: '50%',
-                  padding: '5px',
-                } : null,
-              }}
-              
-              
-              
-            />
-          ))}
+          {markers.map((marker) => {
+            const currentDate = new Date();
+            const fromDate = new Date(marker.fromdate);
+            const toDate = new Date(marker.todate);
+            const isWithinDateRange = currentDate >= fromDate && currentDate <= toDate;
+            const isUserAddressNotNull = marker.useraddress !== null;
+
+            if (isWithinDateRange || isUserAddressNotNull) {
+              return (
+                <Marker
+                  key={marker.id}
+                  position={{ lat: marker.lat, lng: marker.lng }}
+                  onMouseOver={() => {
+                    setSelectedMarker(marker);
+                    setOpenPopup(true);
+                  }}
+                  onClick={() => {
+                    if (!selectedItems.some((item) => item.id === marker.id)) {
+                      const updatedItems = [...selectedItems, marker];
+                      setSelectedItems(updatedItems);
+                    }
+                  }}
+                  icon={{
+                    url: marker.lat === center.lat ? '/images/house.png' : '/images/ls.png',
+                    scaledSize: new window.google.maps.Size(60, 60),
+                    origin: new window.google.maps.Point(0, 0),
+                    anchor: new window.google.maps.Point(18, 18),
+                  }}
+                  options={{
+                    label: selectedItems.some((item) => item.id === marker.id)
+                      ? {
+                        text: 'Selected',
+                        color: 'black',
+                        fontWeight: 'bold',
+                        fontSize: '12px',
+                        background: 'rgba(0, 0, 255, 0.3)',
+                        borderRadius: '50%',
+                        padding: '5px',
+                      }
+                      : null,
+                  }}
+                />
+              );
+            }
+          })}
           {selectedMarker && openPopup && (
             <InfoWindow
               position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
@@ -131,7 +138,7 @@ function UserPage() {
             >
               <div>
                 <h2>{selectedMarker.street}, {selectedMarker.city}</h2>
-                <p>Sales Dates: {selectedMarker.fromdate} - {selectedMarker.todate}</p>
+                <p>Sales Dates: {selectedMarker.fromdate.slice(0,10)} - {selectedMarker.todate.slice(0,10)}</p>
               </div>
             </InfoWindow>
           )}
@@ -146,8 +153,25 @@ function UserPage() {
         ))}
       </div>
       <button onClick={generateAndSendRoute}>Generate Route and Send Email</button>
+      <div>
+        <h2>Generated Routes:</h2>
+        {/* Display the route data */}
+        {routeData && (
+          <div>
+            <p>Distance: {routeData.distance}</p>
+            <p>Duration: {routeData.duration}</p>
+            <ul>
+              {routeData.steps.map((step, index) => (
+                <li key={index}>{step.instructions}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+UserPage.libraries = libraries; // Declare libraries as a static class property
 
 export default UserPage;

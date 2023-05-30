@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
         LEFT OUTER JOIN (SELECT * FROM address WHERE user_id = $1) sub
         ON a.id = sub.id
         LEFT OUTER JOIN sales s ON s.user_id = a.user_id
-        WHERE CURRENT_DATE BETWEEN s.fromdate AND s.todate; `;
+        --WHERE CURRENT_DATE BETWEEN s.fromdate AND s.todate; `;
         // STEP 2: Use the logged in users id (req.user.id) to GET
         // the list of pets.
         pool.query(queryText, parameters).then((result) => {

@@ -20,7 +20,7 @@ function UserPage() {
   const addresses = useSelector((store) => store.address);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: '',
+    googleMapsApiKey: 'AIzaSyDrV5WgmwoHXY0i_PUEKFUEaJfAn2sEa-o',
     libraries, 
   });
 
@@ -152,21 +152,10 @@ function UserPage() {
           </div>
         ))}
       </div>
-      <button onClick={generateAndSendRoute}>Generate Route and Send Email</button>
+      <button onClick={generateAndSendRoute}>Generate Route</button>
       <div>
         <h2>Generated Routes:</h2>
         {/* Display the route data */}
-        {routeData && (
-          <div>
-            <p>Distance: {routeData.distance}</p>
-            <p>Duration: {routeData.duration}</p>
-            <ul>
-              {routeData.steps.map((step, index) => (
-                <li key={index}>{step.instructions}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </div>
   );

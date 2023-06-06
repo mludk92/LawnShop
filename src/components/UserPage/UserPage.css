@@ -17,14 +17,20 @@
     border-width: 3px;
     
   }
-  .popup {
+  .listof {
     background-image: url("/public/images/ripbox.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
+    height: 50px;
     box-shadow: 1px 1px 0px rgb(9, 9, 9),
                 2px 2px 0px rgb(126, 97, 74),
                 3px 3px 0px rgb(192, 145, 110),
                 4px 4px 0px rgb(192, 145, 110),
                 5px 5px 0px rgb(192, 145, 110),
                 6px 6px 0px rgb(13, 13, 13);
+  }
+
+  .titleElem{
+    font-family: 'Permanent Marker', cursive;
+  font-size: 40px;
   }

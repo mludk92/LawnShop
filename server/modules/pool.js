@@ -1,26 +1,32 @@
+
+
 const pg = require('pg');
 let pool;
 
+// When our app is deployed to the internet 
+// we'll use the DATABASE_URL environment variable
+// to set the connection info: web address, username/password, db name
+// eg: 
+//  DATABASE_URL=postgresql://jDoe354:secretPw123@some.db.com/prime_app
 if (process.env.DATABASE_URL) {
-  // When the app is deployed on Heroku
-  pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
-} else {
-  // When running the app locally
-  pool = new pg.Pool({
-    host: 'ec2-3-232-218-211.compute-1.amazonaws.com',
-    port: 5432,
-    database: 'd62v8kmvafj7iv',
-    user: 'fbuafazsqnxtiw',
-    password: '94bcdf88e024a26c3f7e1e1bd9632e9c28257773393c2fb0e17170f43d355196',
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
+    pool = new pg.Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+}
+// When we're running this app on our own computer
+// we'll connect to the postgres database that is 
+// also running on our computer (localhost)
+else {
+    pool = new pg.Pool({
+        host: 'localhost',
+        port: 5432,
+        database: 'lawn_shop',// 	💥 Change this to the name of your database!
+        // user: 'mludkey'  ,
+        // password: 'admin', 
+    });
 }
 
 module.exports = pool;

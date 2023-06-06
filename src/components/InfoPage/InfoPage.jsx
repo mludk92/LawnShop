@@ -23,40 +23,38 @@ function InfoPage() {
 
   const currentDate = new Date();
 
-  const addSale = (event) => {
+  const addSale = async (event) => {
     event.preventDefault();
-
+  
     if (enddate && startdate && startdate > enddate) {
       setError("End date cannot be before the start date.");
       return;
     }
-
+  
     if (!startdate) {
       setError("Please select a start date.");
       return;
     }
-
-    dispatch({
+  
+    await dispatch({
       type: "FETCH_NEWSALE",
       payload: {
         fromdate: startdate.toISOString().substring(0, 10),
         todate: enddate ? enddate.toISOString().substring(0, 10) : "",
       },
     });
-
-    dispatch({ type: "FETCH_SALE" });
-
+  
     setStart(null);
     setEnd(null);
     setError("");
+  
+    dispatch({ type: "FETCH_SALE" });
   };
 
   const deleteSale = (saleId) => {
     dispatch({ type: "FETCH_DELETESALE", payload: { id: saleId } });
-    dispatch({ type: "FETCH_SALE" }); 
+    dispatch({ type: "FETCH_SALE" });
   };
-  
-  
 
   const openModal = (sale) => {
     setSelectedSale(sale.id);
@@ -80,13 +78,15 @@ function InfoPage() {
       <h2>Your Current and Previous Sales</h2>
       <section className="sales">
         {sales.map((sale) => {
-          const fromDate = sale.fromdate ? sale.fromdate.substring(0, 10) : "";
-          const toDate = sale.todate ? sale.todate.substring(0, 10) : "";
+          const fromDate = sale.fromdate ? new Date(sale.fromdate) : null;
+          const toDate = sale.todate ? new Date(sale.todate) : null;
           const saleFeatured = featured.filter(
             (feature) => feature.sales_id === sale.id
           );
           const isCurrentDateInSaleRange = isCurrentDateInRange(fromDate, toDate);
-          const cardClassName = isCurrentDateInSaleRange ? "sale-card flash-border" : "sale-card";
+          const cardClassName = isCurrentDateInSaleRange
+            ? "sale-card flash-border"
+            : "sale-card";
 
           return (
             <div key={sale.id} className={cardClassName}>
@@ -96,8 +96,8 @@ function InfoPage() {
               >
                 &#10006;
               </button>
-              <h3>Start Date: {fromDate}</h3>
-              <h3>End Date: {toDate}</h3>
+              <h3>Start Date: {fromDate ? fromDate.toLocaleDateString() : ""}</h3>
+              <h3>End Date: {toDate ? toDate.toLocaleDateString() : ""}</h3>
 
               {saleFeatured.map((feature) => (
                 <div key={feature.id}>

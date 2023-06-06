@@ -20,7 +20,7 @@ function UserPage() {
   const addresses = useSelector((store) => store.address);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: '',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,//'AIzaSyDrV5WgmwoHXY0i_PUEKFUEaJfAn2sEa-o',
     libraries, 
   });
 
@@ -152,15 +152,15 @@ function UserPage() {
           </div>
         ))}
       </div>
-      <button onClick={generateAndSendRoute}>Generate Route</button>
+      <button onClick={generateAndSendRoute}>Generate Directions</button>
       <div>
         <h2>Generated Routes:</h2>
-        {/* Display the route data */}
+        <div>Coming Soon</div>
       </div>
     </div>
   );
 }
 
-UserPage.libraries = libraries; // Declare libraries as a static class property
+UserPage.libraries = libraries; 
 
 export default UserPage;

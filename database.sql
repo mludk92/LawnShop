@@ -30,10 +30,10 @@ CREATE TABLE featured_items (
   description VARCHAR(1000) null
 );
 --------------------------------------------
-insert into "user"( username, password)
-values('admin' , 'admin');
+-- insert into "user"( username, password)
+-- values('admin' , 'admin');
 
-select * from "user" ;
+-- select * from "user" ;
 --------------------------------------------
 insert into sales(user_id ,fromdate, todate)
 values(1,'05/16/2023' , '05/20/2023'),
@@ -108,4 +108,5 @@ select * from address;
 
 delete from "user" where id = 23;
 
+--add to test a new build 
 

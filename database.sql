@@ -17,7 +17,9 @@ CREATE TABLE address (
   city VARCHAR(50) NOT NULL,
   state VARCHAR(50) NOT NULL,
   street VARCHAR(300) null,
-  zip INTEGER null
+  zip INTEGER null,
+  lat double precision not null,
+  lng double precision not null
 );
 
 CREATE TABLE featured_items (
@@ -53,12 +55,14 @@ select * from featured_items;
 
 select s.id, s.user_id, sales_id, item, price, description,fromdate,fi.id as item_id, todate from sales s
                          left outer join featured_items fi
-                         on s.id = fi.sales_id WHERE "user_id" = 1 order by fromdate desc;
+                         on s.id = fi.sales_id WHERE "user_id" = 1 o1rder by fromdate desc;
 
-SELECT a.*, (sub.street || ', ' || sub.city || ', ' || sub.state || ', ' || sub.zip) as useraddress
+SELECT a.*, (sub.street || ', ' || sub.city || ', ' || sub.state || ', ' || sub.zip) as useraddress, s.fromdate, s.todate
 FROM address a
-LEFT OUTER JOIN (SELECT * FROM address WHERE user_id = 1) sub
-ON a.id = sub.id;
+LEFT OUTER JOIN (SELECT * FROM address WHERE user_id = 11) sub ON a.id = sub.id
+LEFT OUTER JOIN sales s ON s.user_id = a.user_id
+WHERE CURRENT_DATE BETWEEN s.fromdate AND s.todate or (sub.street || ', ' || sub.city || ', ' || sub.state || ', ' || sub.zip) is not null ;
+
 
 
 
@@ -73,3 +77,35 @@ update sales set fromdate = '2023/05/15', todate = '2023-05-21' where id = 3;
 
 --put statment test for featured_items
 update featured_items set item = 'broken vase', description = 'its old and broken' where sales_id = 3 and id = 2 ;
+
+delete from featured_items where sales_id = 16;
+delete from sales where id = 16;
+
+
+--mock data for sales 
+
+insert into sales (user_id, fromdate, todate)
+values (9, '2023-05-27', '2023-06-18'),
+(10, '2023-05-27', '2023-06-18'),
+(11, '2023-05-27', '2023-06-18'),
+(12, '2023-05-27', '2023-06-18'),
+(13, '2023-05-27', '2023-06-18'),
+(14, '2023-05-27', '2023-06-18'),
+(15, '2023-05-27', '2023-06-18'),
+(16, '2023-05-27', '2023-06-18'),
+(17, '2023-05-27', '2023-06-18'),
+(18, '2023-05-27', '2023-06-18'),
+(19, '2023-05-27', '2023-06-18');
+
+select * from "user" u 
+left outer join sales s 
+on s.user_id = u.id
+left outer join address a 
+on a.user_id = u.id;
+
+
+select * from address;
+
+delete from "user" where id = 23;
+
+

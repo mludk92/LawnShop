@@ -78,3 +78,12 @@ The intial build of the this applicaiton did not geocode address as they were re
 
 Googles routing api does not seem to provide best route calculations but instead provides routing to address which are next in the selected list provided to the services. This is not the disired output, and development was placed on hold. Using GIS tech and the least cost path method would result in a betters solution to this. QGIS could be used as a free alternative but ESRI would be recommend to additional intergration to app functionality.
 
+## how to use
+
+login / register for your account. ( account set will create entires in the database with names and address, as well as geocode your address for lat long values to be used in the base map of the application)
+
+home page - the home page is a map view centered on your addresses location, you will be able to see all sales in your current area from this view. 
+--by selection a sale you will add that sales to an array or sales you would like to visit, these values can be removed by the delete function next to their values. when selected the sales will show as selected in text on the main map. there is also a generate route function which at this moment is currently not configured but will in later iterations generate gps routes to all selected sales. 
+
+--add sales
+in the header there is a link to add sales. this page is where all new sales can be entered by the user. Required for sales is a start date and end date, will error out if the end is before the start date. once submitted a card will appear with that new sale, and a button to edit or add items. when clicked a module will open on the page, you can add items, descriptions and prices for any items you would like to feature. from this page you can also edit these items with edit item button, and edit dates by changing the values and hitting submit edits. 
